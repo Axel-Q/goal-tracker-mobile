@@ -17,7 +17,7 @@ export default function App() {
 
     function handleInputData(data) {
         console.log("console logout ", data);
-        setInputData("User input: " + data);
+        setInputData("study: " + data);
         setModalVisible(false);
     }
 
@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
     headerContainer: {
         borderColor: 'purple',
         borderWidth: 2,
-        padding: 5
+        padding: 5,
+        marginBottom:20,
     },
     text: {
         color: 'purple', // Added text color
@@ -70,6 +71,7 @@ const styles = StyleSheet.create({
         flex: 4,
         backgroundColor: 'lightblue',
         alignItems: "center",
+        width: '100%',
     },
 });
 
