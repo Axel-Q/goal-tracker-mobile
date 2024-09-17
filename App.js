@@ -9,13 +9,20 @@ export default function App() {
     const appName = "Axel's APP";
     const [focus, setFocus] = useState(true);
     const [inputData, setInputData] = useState('');
-      // Handler for focus state, passed to Input component
+    const [modalVisible, setModalVisible] = useState(false);
+    // Handler for focus state, passed to Input component
     const handleFocusChange = (focusState) => {
         setFocus(focusState);
     };
-    function  handleInputData (data){
-        console.log("console logout ",data);
+
+    function handleInputData(data) {
+        console.log("console logout ", data);
         setInputData("User input: " + data);
+        setModalVisible(false);
+    }
+
+    const handleVisibility = () => {
+        setModalVisible(true);
     }
 
 
@@ -24,7 +31,11 @@ export default function App() {
         <View style={styles.container}>
             <StatusBar style="auto"/>
             <Header name={appName}/>
-            <Input onFocusChange={handleFocusChange} autoFocus={focus} inputHandler={handleInputData}/>
+            <Button title={'Add a goal'} onPress={handleVisibility} />
+            <Input onFocusChange={handleFocusChange}
+                   autoFocus={focus}
+                   inputHandler={handleInputData}
+                   visible={modalVisible}/>
             <Text style={{marginTop: 10, backgroundColor: 'skyblue'}}>{inputData}</Text>
         </View>
     );
