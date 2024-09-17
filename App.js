@@ -7,7 +7,7 @@ import Input from "./Components/Input";
 
 export default function App() {
     const appName = "Axel's APP";
-    const [focus, setFocus] = useState(false);
+    const [focus, setFocus] = useState(true);
       // Handler for focus state, passed to Input component
     const handleFocusChange = (focusState) => {
         setFocus(focusState);

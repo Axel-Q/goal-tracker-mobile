@@ -4,7 +4,7 @@ import {TextInput, Text, Button, View} from 'react-native';
 export default function Input({onFocusChange, autoFocus}) {
     const [text, setText] = useState('');
     const [message, setMessage] = useState('');
-    const [isFocused, setIsFocused] = useState(false); // State to track if input is focused
+    const [isFocused, setIsFocused] = useState(true); // State to track if input is focused
     const inputRef = useRef(null); // Reference for the TextInput
     useEffect(() => {
         if (autoFocus && inputRef.current) {
