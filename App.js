@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {useState, useRef} from 'react';
 import Header from "./Components/Header";
 import React from "react";
@@ -25,19 +25,23 @@ export default function App() {
         setModalVisible(true);
     }
 
-
-
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
+            <View style={styles.topView}>
             <StatusBar style="auto"/>
-            <Header name={appName}/>
-            <Button title={'Add a goal'} onPress={handleVisibility} />
+            <View style={styles.headerContainer}>
+                <Header name={appName}/>
+            </View>
+            <Button title={'Add a goal'} onPress={handleVisibility}/>
             <Input onFocusChange={handleFocusChange}
                    autoFocus={focus}
                    inputHandler={handleInputData}
                    visible={modalVisible}/>
+                      </View>
+            <View style={styles.bottomView}>
             <Text style={{marginTop: 10, backgroundColor: 'skyblue'}}>{inputData}</Text>
-        </View>
+                </View>
+        </SafeAreaView>
     );
 }
 
@@ -47,6 +51,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 20, // Added padding for better spacing
+    },
+    headerContainer: {
+        borderColor: 'purple',
+        borderWidth: 2,
+        padding: 5
+    },
+    text: {
+        color: 'purple', // Added text color
+    },
+    topView: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    bottomView: {
+        flex: 4,
+        backgroundColor: 'lightblue',
+        alignItems: "center",
     },
 });
 

@@ -37,7 +37,7 @@
                 <View style={styles.container}>
                     <TextInput placeholder={"Enter your phone number here"}
                                keyboardType={"numeric"}
-                               style={{color: "blue"}} value={text}
+                               style={styles.input} value={text}
                                onChangeText={(text) => setText(text)}
                                onFocus={handleFocus}
                                onBlur={handleBlur}
@@ -64,6 +64,6 @@
             backgroundColor: 'red',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '10%',
         },
+        input: { borderColor: "purple", borderWidth: 2, padding: 5 },
     });
