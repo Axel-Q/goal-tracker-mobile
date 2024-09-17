@@ -27,6 +27,11 @@ export default function Input({onFocusChange, autoFocus}) {
         onFocusChange(true); // Pass the focus state to the parent component
     };
 
+    const handleConfirm = () => {
+        console.log("user input: ", text);
+    }
+
+
 
     return (
         <View>
@@ -42,7 +47,8 @@ export default function Input({onFocusChange, autoFocus}) {
                     Character count: {text.length}
                 </Text>
             )}
-            <Button title={"Clear content"} onPress={() => setText('')}/>
+            {/*<Button title={"Clear content"} onPress={() => setText('')}/>*/}
+            <Button title={"Confirm"} onPress={() => handleConfirm()}/>
             {message !== '' && (
                 <Text style={{marginTop: 10}}>
                     {message}
