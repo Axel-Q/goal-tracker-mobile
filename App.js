@@ -8,15 +8,24 @@ import Input from "./Components/Input";
 export default function App() {
     const appName = "Axel's APP";
     const [focus, setFocus] = useState(true);
+    const [inputData, setInputData] = useState('');
       // Handler for focus state, passed to Input component
     const handleFocusChange = (focusState) => {
         setFocus(focusState);
     };
+    function  handleInputData (data){
+        console.log("console logout ",data);
+        setInputData("User input: " + data);
+    }
+
+
+
     return (
         <View style={styles.container}>
             <StatusBar style="auto"/>
             <Header name={appName}/>
-            <Input onFocusChange={handleFocusChange} autoFocus={focus} />
+            <Input onFocusChange={handleFocusChange} autoFocus={focus} inputHandler={handleInputData}/>
+            <Text style={{marginTop: 10, backgroundColor: 'skyblue'}}>{inputData}</Text>
         </View>
     );
 }

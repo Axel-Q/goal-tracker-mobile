@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {TextInput, Text, Button, View} from 'react-native';
+import {TextInput, Text, Button, View, StyleSheet, Modal} from 'react-native';
 
-export default function Input({onFocusChange, autoFocus}) {
+export default function Input({onFocusChange, autoFocus, inputHandler}) {
     const [text, setText] = useState('');
     const [message, setMessage] = useState('');
     const [isFocused, setIsFocused] = useState(true); // State to track if input is focused
@@ -28,31 +28,41 @@ export default function Input({onFocusChange, autoFocus}) {
     };
 
     const handleConfirm = () => {
-        console.log("user input: ", text);
+        inputHandler(text);
     }
 
 
-
     return (
-        <View>
-            <TextInput placeholder={"Enter your phone number here"}
-                       keyboardType={"numeric"}
-                       style={{color: "blue"}} value={text}
-                       onChangeText={(text) => setText(text)}
-                       onFocus={handleFocus}
-                       onBlur={handleBlur}
-                       ref={inputRef}/>
-            {isFocused && text.length > 0 && (
-                <Text style={{backgroundColor: "lightgray"}}>
-                    Character count: {text.length}
-                </Text>
-            )}
-            {/*<Button title={"Clear content"} onPress={() => setText('')}/>*/}
-            <Button title={"Confirm"} onPress={() => handleConfirm()}/>
-            {message !== '' && (
-                <Text style={{marginTop: 10}}>
-                    {message}
-                </Text>)}
-        </View>
+        <Modal>
+            <View style={styles.container}>
+                <TextInput placeholder={"Enter your phone number here"}
+                           keyboardType={"numeric"}
+                           style={{color: "blue"}} value={text}
+                           onChangeText={(text) => setText(text)}
+                           onFocus={handleFocus}
+                           onBlur={handleBlur}
+                           ref={inputRef}/>
+                {isFocused && text.length > 0 && (
+                    <Text style={{backgroundColor: "lightgray"}}>
+                        Character count: {text.length}
+                    </Text>
+                )}
+                {/*<Button title={"Clear content"} onPress={() => setText('')}/>*/}
+                <Button title={"Confirm"} onPress={() => handleConfirm()}/>
+                {message !== '' && (
+                    <Text style={{marginTop: 10}}>
+                        {message}
+                    </Text>)}
+            </View>
+        </Modal>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
