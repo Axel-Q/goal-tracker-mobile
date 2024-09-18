@@ -60,7 +60,10 @@ export default function Input({textInputFocus, inputHandler, visible, cancelHand
                     ) : (
                         text && <Text>{text.length}</Text>
                     )}
-
+                    <View style={styles.buttonContainer}>
+                        <Button disabled={!canConfirm} title={"Confirm"} onPress={() => handleConfirm()}/>
+                        <Button title={"Cancel"} onPress={() => handleCancel()}/>
+                    </View>
                 </View>
             </View>
         </Modal>
