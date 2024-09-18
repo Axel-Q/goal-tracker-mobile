@@ -13,10 +13,13 @@ export default function App() {
         setModalVisible(true);
     }
 
-
     function handleInputData(data) {
         console.log("console logout ", data);
         setInputData("study: " + data);
+        setModalVisible(false);
+    }
+
+    function handleCancel() {
         setModalVisible(false);
     }
 
@@ -29,7 +32,8 @@ export default function App() {
                 <Button title={'Add a goal'} onPress={handleVisibility}/>
                 <Input textInputFocus={true}
                        inputHandler={handleInputData}
-                       visible={modalVisible}/>
+                       visible={modalVisible}
+                       cancelHandler={handleCancel}/>
             </View>
             <View style={styles.bottomView}>
                 <Text style={styles.text}>{inputData}</Text>
