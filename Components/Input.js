@@ -40,10 +40,13 @@ export default function Input({textInputFocus, inputHandler, visible, cancelHand
             <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
                     <Image style={styles.image}
-                           source={require('../assets/pic1.png')} alt={'pic from local'}/>
+                           source={require('../assets/pic1.png')}
+                           alt={'Target with an arrow and a check mark'}
+                           accessibilityLabel={"icon from local"}/>
 
                     <Image style={styles.image}
-                           alt={'pic from web'}
+                           alt={'Target with an arrow and a check mark'}
+                           accessibilityLabel={"icon from web"}
                            source={{uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}}/>
 
                     <TextInput
@@ -89,7 +92,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     input: {borderColor: "purple", borderWidth: 2, padding: 5},
-    buttonContainer: {flexDirection: 'row', justifyContent: 'space-between', width: '40%'},
+    buttonContainer: {flexDirection: 'row', justifyContent: 'space-between', width: '60%'},
     imageContainer: {flex: 1, justifyContent: 'center', alignItems: 'center'},
     image: {
         width: 100,
