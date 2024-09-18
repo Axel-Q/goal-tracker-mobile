@@ -39,6 +39,12 @@ export default function Input({textInputFocus, inputHandler, visible, cancelHand
         <Modal animationType={"slide"} visible={visible} transparent={true}>
             <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
+                    <Image style={styles.image}
+                           source={require('../assets/pic1.png')} alt={'pic from local'}/>
+
+                    <Image style={styles.image}
+                           alt={'pic from web'}
+                           source={{uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png'}}/>
 
                     <TextInput
                         autoFocus={textInputFocus}
