@@ -7,13 +7,12 @@ import Input from "./Components/Input";
 
 export default function App() {
     const appName = "Axel's APP";
-    const [focus, setFocus] = useState(true);
     const [inputData, setInputData] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    // Handler for focus state, passed to Input component
-    const handleFocusChange = (focusState) => {
-        setFocus(focusState);
-    };
+    const handleVisibility = () => {
+        setModalVisible(true);
+    }
+
 
     function handleInputData(data) {
         console.log("console logout ", data);
@@ -21,26 +20,20 @@ export default function App() {
         setModalVisible(false);
     }
 
-    const handleVisibility = () => {
-        setModalVisible(true);
-    }
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.topView}>
             <StatusBar style="auto"/>
-            <View style={styles.headerContainer}>
+            <View style={styles.topView}>
                 <Header name={appName}/>
+                <Button title={'Add a goal'} onPress={handleVisibility}/>
+                <Input textInputFocus={true}
+                       inputHandler={handleInputData}
+                       visible={modalVisible}/>
             </View>
-            <Button title={'Add a goal'} onPress={handleVisibility}/>
-            <Input onFocusChange={handleFocusChange}
-                   autoFocus={focus}
-                   inputHandler={handleInputData}
-                   visible={modalVisible}/>
-                      </View>
             <View style={styles.bottomView}>
-            <Text style={{marginTop: 10, backgroundColor: 'skyblue'}}>{inputData}</Text>
-                </View>
+                <Text style={styles.text}>{inputData}</Text>
+            </View>
         </SafeAreaView>
     );
 }
@@ -49,7 +42,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
+        // alignItems: 'center',
         justifyContent: 'center',
         padding: 20, // Added padding for better spacing
     },
@@ -57,10 +50,7 @@ const styles = StyleSheet.create({
         borderColor: 'purple',
         borderWidth: 2,
         padding: 5,
-        marginBottom:20,
-    },
-    text: {
-        color: 'purple', // Added text color
+        marginBottom: 20,
     },
     topView: {
         flex: 1,
@@ -71,7 +61,6 @@ const styles = StyleSheet.create({
         flex: 4,
         backgroundColor: 'lightblue',
         alignItems: "center",
-        width: '100%',
     },
 });
 
