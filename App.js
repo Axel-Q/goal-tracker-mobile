@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar';
-import {Button, SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView} from 'react-native';
 import {useState, useRef} from 'react';
 import Header from "./Components/Header";
 import React from "react";
@@ -9,6 +9,7 @@ export default function App() {
     const appName = "Axel's APP";
     const [inputData, setInputData] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [goals, setGoals] = useState([]);
     const handleVisibility = () => {
         setModalVisible(true);
     }
@@ -17,6 +18,10 @@ export default function App() {
         console.log("console logout ", data);
         setInputData("study: " + data);
         setModalVisible(false);
+        const newGoal = {id: Math.random(), text: data};
+        setGoals((currentGoals) => {
+            return [...currentGoals, newGoal];
+        })
     }
 
     function handleCancel() {
@@ -36,10 +41,22 @@ export default function App() {
                        cancelHandler={handleCancel}/>
             </View>
             <View style={styles.bottomView}>
-                <Text style={styles.text}>{inputData}</Text>
+                {goals.length === 0 ? (
+                    <Text style={styles.text}>No goals yet</Text>) : (
+                    <ScrollView>
+                        {goals.map((goal) => {
+                            return (
+                                <View key={goal.id} style={styles.textContainer}>
+                                    <Text style={styles.text}>{goal.text}</Text>
+                                </View>
+                            );
+                        })}
+                    </ScrollView>
+                )}
             </View>
         </SafeAreaView>
-    );
+    )
+        ;
 }
 
 const styles = StyleSheet.create({
@@ -65,6 +82,16 @@ const styles = StyleSheet.create({
         flex: 4,
         backgroundColor: 'lightblue',
         alignItems: "center",
+    },
+    textContainer: {
+        marginVertical: 25,
+        backgroundColor: "#faa5a5",
+        padding: 35,
+        borderRadius: 5,
+    },
+    text: {
+        color: "white",
+        fontSize: 20,
     },
 });
 
