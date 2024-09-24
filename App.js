@@ -18,6 +18,7 @@ export default function App() {
         console.log("console logout ", data);
         setInputData("study: " + data);
         setModalVisible(false);
+        // add the new goal to the list of goals
         const newGoal = {id: Math.random(), text: data};
         setGoals((currentGoals) => {
             return [...currentGoals, newGoal];
