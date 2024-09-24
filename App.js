@@ -4,7 +4,7 @@ import {useState, useRef} from 'react';
 import Header from "./Components/Header";
 import React from "react";
 import Input from "./Components/Input";
-import GoalIterm from "./Components/GoalIterm";
+import GoalIterm from "./Components/GoalItem";
 
 export default function App() {
     const appName = "Axel's APP";
@@ -32,6 +32,12 @@ export default function App() {
         setModalVisible(false);
     }
 
+    function handleDelete(id) {
+        setGoals((currentGoals) => {
+            return currentGoals.filter((goal) => goal.id !== id);
+        });
+    }
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -51,7 +57,7 @@ export default function App() {
                         contentContainerStyle={styles.scrollViewContainer}
                         renderItem={({item}) => {
                             return (
-                                <GoalIterm goal={item}/>
+                                <GoalIterm goal={item} handleDelete={handleDelete}/>
                             );}
                         } data={goals}
                     />)}
