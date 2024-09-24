@@ -47,6 +47,7 @@ export default function App() {
                 {goals.length === 0 ? (
                     <Text style={styles.text}>No goals yet</Text>) : (
                     <ScrollView>
+                        // map through the goals and display them
                         {goals.map((goal) => {
                             return (
                                 <View key={goal.id} style={styles.textContainer}>
