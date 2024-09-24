@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
     textContainer: {
         marginVertical: 25,
         backgroundColor: "#faa5a5",
-        padding: 35,
-        borderRadius: 5,
+        padding: 30,
+        borderRadius: 15,
     },
     text: {
         color: "white",
