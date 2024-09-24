@@ -20,6 +20,8 @@ export default function App() {
         setModalVisible(false);
         // add the new goal to the list of goals
         const newGoal = {id: Math.random(), text: data};
+        console.log("newGoal", newGoal);
+        // make a new goal and store the recent goals to the list of goals using  state setter function
         setGoals((currentGoals) => {
             return [...currentGoals, newGoal];
         })
