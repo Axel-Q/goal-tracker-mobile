@@ -4,6 +4,7 @@ import {useState, useRef} from 'react';
 import Header from "./Components/Header";
 import React from "react";
 import Input from "./Components/Input";
+import GoalIterm from "./Components/GoalIterm";
 
 export default function App() {
     const appName = "Axel's APP";
@@ -50,23 +51,19 @@ export default function App() {
                         contentContainerStyle={styles.scrollViewContainer}
                         renderItem={({item}) => {
                             return (
-                                <View key={item.id} style={styles.textContainer}>
-                                    <Text style={styles.text}>{item.text}</Text>
-                                </View>
-                            )
-                                ;
-                        }
+                                <GoalIterm goal={item}/>
+                            );}
                         } data={goals}
                     />)}
-                    {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>*/}
-                    {/*    {goals.map((goal) => {*/}
-                    {/*        return (*/}
-                    {/*            <View key={goal.id} style={styles.textContainer}>*/}
-                    {/*                <Text style={styles.text}>{goal.text}</Text>*/}
-                    {/*            </View>*/}
-                    {/*        );*/}
-                    {/*    })}*/}
-                    {/*</ScrollView>*/}
+                {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>*/}
+                {/*    {goals.map((goal) => {*/}
+                {/*        return (*/}
+                {/*            <View key={goal.id} style={styles.textContainer}>*/}
+                {/*                <Text style={styles.text}>{goal.text}</Text>*/}
+                {/*            </View>*/}
+                {/*        );*/}
+                {/*    })}*/}
+                {/*</ScrollView>*/}
             </View>
         </SafeAreaView>
     )
@@ -99,16 +96,6 @@ const styles = StyleSheet.create({
         flex: 4,
         backgroundColor: 'lightblue',
         alignItems: "center",
-    },
-    textContainer: {
-        marginVertical: 25,
-        backgroundColor: "#faa5a5",
-        padding: 40,
-        borderRadius: 15,
-    },
-    text: {
-        color: "white",
-        fontSize: 20,
     },
 });
 
