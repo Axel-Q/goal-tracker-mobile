@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar';
-import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView} from 'react-native';
+import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, FlatList} from 'react-native';
 import {useState, useRef} from 'react';
 import Header from "./Components/Header";
 import React from "react";
@@ -45,17 +45,28 @@ export default function App() {
             </View>
             <View style={styles.bottomView}>
                 {goals.length === 0 ? (
-                    <Text style={styles.text}>No goals yet</Text>) : (
-                    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-                        {goals.map((goal) => {
+                    <Text style={styles.text}>Please add a goal</Text>) : (
+                    <FlatList
+                        contentContainerStyle={styles.scrollViewContainer}
+                        renderItem={({item}) => {
                             return (
-                                <View key={goal.id} style={styles.textContainer}>
-                                    <Text style={styles.text}>{goal.text}</Text>
+                                <View key={item.id} style={styles.textContainer}>
+                                    <Text style={styles.text}>{item.text}</Text>
                                 </View>
-                            );
-                        })}
-                    </ScrollView>
-                )}
+                            )
+                                ;
+                        }
+                        } data={goals}
+                    />)}
+                    {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>*/}
+                    {/*    {goals.map((goal) => {*/}
+                    {/*        return (*/}
+                    {/*            <View key={goal.id} style={styles.textContainer}>*/}
+                    {/*                <Text style={styles.text}>{goal.text}</Text>*/}
+                    {/*            </View>*/}
+                    {/*        );*/}
+                    {/*    })}*/}
+                    {/*</ScrollView>*/}
             </View>
         </SafeAreaView>
     )
