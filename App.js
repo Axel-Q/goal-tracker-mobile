@@ -46,8 +46,7 @@ export default function App() {
             <View style={styles.bottomView}>
                 {goals.length === 0 ? (
                     <Text style={styles.text}>No goals yet</Text>) : (
-                    <ScrollView>
-                        // map through the goals and display them
+                    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
                         {goals.map((goal) => {
                             return (
                                 <View key={goal.id} style={styles.textContainer}>
@@ -64,6 +63,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+    scrollViewContainer: {
+        alignItems: "center",
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     textContainer: {
         marginVertical: 25,
         backgroundColor: "#faa5a5",
-        padding: 30,
+        padding: 40,
         borderRadius: 15,
     },
     text: {
