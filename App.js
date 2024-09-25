@@ -4,7 +4,7 @@ import {useState, useRef} from 'react';
 import Header from "./Components/Header";
 import React from "react";
 import Input from "./Components/Input";
-import GoalIterm from "./Components/GoalItem";
+import GoalItem from "./Components/GoalItem";
 
 export default function App() {
     const appName = "Axel's APP";
@@ -50,6 +50,10 @@ export default function App() {
         );
     }
 
+    const listSeparator = () => {
+        return <View style={styles.separator}/>
+    }
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -69,7 +73,7 @@ export default function App() {
                     data={goals}
                     renderItem={({item}) => {
                         return (
-                            <GoalIterm goal={item} handleDelete={handleDelete}/>
+                            <GoalItem goal={item} handleDelete={handleDelete}/>
                         );
                     }
                     }
@@ -89,6 +93,7 @@ export default function App() {
                             />
                         ) : null
                     }
+                    ItemSeparatorComponent={listSeparator}
                 />
             </View>
         </SafeAreaView>
@@ -97,7 +102,6 @@ export default function App() {
 
 const styles = StyleSheet.create({
     scrollViewContainer: {
-        alignItems: "center",
     },
     container: {
         flex: 1,
@@ -134,6 +138,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         marginVertical: 10,
+    },
+    separator: {
+        height: 3,
+        width: '100%',
+        backgroundColor: 'purple',
     },
 });
 
