@@ -64,11 +64,15 @@ export default function App() {
                     ListEmptyComponent={
                         <Text style={styles.noGoalsText}>No goals to show</Text>
                     }
+                    ListHeaderComponent={
+                        goals.length > 0 ? (
+                            <Text style={styles.headerText}>My Goals</Text>
+                        ) : null
+                    }
                 />
             </View>
         </SafeAreaView>
-    )
-        ;
+    );
 }
 
 const styles = StyleSheet.create({
@@ -103,6 +107,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         textAlign: 'center',
         marginTop: 20,
+    },
+    headerText: {
+        color: 'purple',
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginVertical: 10,
     },
 });
 
