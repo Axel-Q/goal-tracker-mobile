@@ -1,14 +1,16 @@
 import {StatusBar} from 'expo-status-bar';
-import {Button, SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, FlatList} from 'react-native';
 import {useState, useRef} from 'react';
 import Header from "./Components/Header";
 import React from "react";
 import Input from "./Components/Input";
+import GoalIterm from "./Components/GoalItem";
 
 export default function App() {
     const appName = "Axel's APP";
     const [inputData, setInputData] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [goals, setGoals] = useState([]);
     const handleVisibility = () => {
         setModalVisible(true);
     }
@@ -17,10 +19,23 @@ export default function App() {
         console.log("console logout ", data);
         setInputData("study: " + data);
         setModalVisible(false);
+        // add the new goal to the list of goals
+        const newGoal = {id: Math.random(), text: data};
+        console.log("newGoal", newGoal);
+        // make a new goal and store the recent goals to the list of goals using  state setter function
+        setGoals((currentGoals) => {
+            return [...currentGoals, newGoal];
+        })
     }
 
     function handleCancel() {
         setModalVisible(false);
+    }
+
+    function handleDelete(id) {
+        setGoals((currentGoals) => {
+            return currentGoals.filter((goal) => goal.id !== id);
+        });
     }
 
 
@@ -36,13 +51,35 @@ export default function App() {
                        cancelHandler={handleCancel}/>
             </View>
             <View style={styles.bottomView}>
-                <Text style={styles.text}>{inputData}</Text>
+                {goals.length === 0 ? (
+                    <Text style={styles.text}>Please add a goal</Text>) : (
+                    <FlatList
+                        contentContainerStyle={styles.scrollViewContainer}
+                        renderItem={({item}) => {
+                            return (
+                                <GoalIterm goal={item} handleDelete={handleDelete}/>
+                            );}
+                        } data={goals}
+                    />)}
+                {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>*/}
+                {/*    {goals.map((goal) => {*/}
+                {/*        return (*/}
+                {/*            <View key={goal.id} style={styles.textContainer}>*/}
+                {/*                <Text style={styles.text}>{goal.text}</Text>*/}
+                {/*            </View>*/}
+                {/*        );*/}
+                {/*    })}*/}
+                {/*</ScrollView>*/}
             </View>
         </SafeAreaView>
-    );
+    )
+        ;
 }
 
 const styles = StyleSheet.create({
+    scrollViewContainer: {
+        alignItems: "center",
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',

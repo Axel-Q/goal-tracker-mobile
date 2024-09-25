@@ -37,7 +37,7 @@ export default function Input({textInputFocus, inputHandler, visible, cancelHand
 
     return (
         <Modal animationType={"slide"} visible={visible} transparent={true}>
-            <View style={styles.modalContainer}>
+            <View style={styles.Container}>
                 <View style={styles.modalContent}>
                     <Image style={styles.image}
                            source={require('../assets/pic1.png')}
@@ -80,15 +80,16 @@ export default function Input({textInputFocus, inputHandler, visible, cancelHand
 }
 
 const styles = StyleSheet.create({
-    modalContainer: {
+    Container: {
         flex: 1,
-        justifyContent: 'flex-end', // Align modal content to the bottom
+        alignItems: "center",
+        justifyContent: "center",// Align modal content to the bottom
     },
     modalContent: {
-        backgroundColor: 'red',
-        height: '80%', // Occupy 80% of the screen height
-        borderRadius: 60, // Rounded top-left corner
-        padding: 20,
+        //  Modal Styling Remove the background color of the container View.
+        backgroundColor: '#c3c2c2',
+        borderRadius: 20, // Rounded top-left corner
+        padding: '10%',
         alignItems: 'center',
     },
     input: {borderColor: "purple", borderWidth: 2, padding: 5},
