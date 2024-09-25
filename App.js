@@ -69,6 +69,14 @@ export default function App() {
                             <Text style={styles.headerText}>My Goals</Text>
                         ) : null
                     }
+                    ListFooterComponent={
+                        goals.length > 0 ? (
+                            <Button
+                                title="Delete All"
+                                onPress={handleDeleteAll}
+                            />
+                        ) : null
+                    }
                 />
             </View>
         </SafeAreaView>
