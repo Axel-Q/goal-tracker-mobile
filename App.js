@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar';
-import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, FlatList} from 'react-native';
+import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, FlatList, Alert} from 'react-native';
 import {useState, useRef} from 'react';
 import Header from "./Components/Header";
 import React from "react";
@@ -36,6 +36,18 @@ export default function App() {
         setGoals((currentGoals) => {
             return currentGoals.filter((goal) => goal.id !== id);
         });
+    }
+
+    function handleDeleteAll() {
+        Alert.alert(
+            'Delete All Goals',
+            'Are you sure you want to delete all goals?',
+            [
+                {text: 'No', style: 'cancel'},
+                {text: 'Yes', onPress: () => setGoals([])},
+            ],
+            {cancelable: false}
+        );
     }
 
 
