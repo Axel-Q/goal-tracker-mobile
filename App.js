@@ -51,25 +51,20 @@ export default function App() {
                        cancelHandler={handleCancel}/>
             </View>
             <View style={styles.bottomView}>
-                {goals.length === 0 ? (
-                    <Text style={styles.text}>Please add a goal</Text>) : (
-                    <FlatList
-                        contentContainerStyle={styles.scrollViewContainer}
-                        renderItem={({item}) => {
-                            return (
-                                <GoalIterm goal={item} handleDelete={handleDelete}/>
-                            );}
-                        } data={goals}
-                    />)}
-                {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>*/}
-                {/*    {goals.map((goal) => {*/}
-                {/*        return (*/}
-                {/*            <View key={goal.id} style={styles.textContainer}>*/}
-                {/*                <Text style={styles.text}>{goal.text}</Text>*/}
-                {/*            </View>*/}
-                {/*        );*/}
-                {/*    })}*/}
-                {/*</ScrollView>*/}
+
+                <FlatList
+                    contentContainerStyle={styles.scrollViewContainer}
+                    data={goals}
+                    renderItem={({item}) => {
+                        return (
+                            <GoalIterm goal={item} handleDelete={handleDelete}/>
+                        );
+                    }
+                    }
+                    ListEmptyComponent={
+                        <Text style={styles.noGoalsText}>No goals to show</Text>
+                    }
+                />
             </View>
         </SafeAreaView>
     )
@@ -102,6 +97,12 @@ const styles = StyleSheet.create({
         flex: 4,
         backgroundColor: 'lightblue',
         alignItems: "center",
+    },
+    noGoalsText: {
+        color: 'purple',
+        fontSize: 18,
+        textAlign: 'center',
+        marginTop: 20,
     },
 });
 
