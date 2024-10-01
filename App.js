@@ -1,10 +1,10 @@
 import {StatusBar} from 'expo-status-bar';
-import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, FlatList} from 'react-native';
+import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, FlatList, Alert} from 'react-native';
 import {useState, useRef} from 'react';
 import Header from "./Components/Header";
 import React from "react";
 import Input from "./Components/Input";
-import GoalIterm from "./Components/GoalItem";
+import GoalItem from "./Components/GoalItem";
 
 export default function App() {
     const appName = "Axel's APP";
@@ -38,6 +38,22 @@ export default function App() {
         });
     }
 
+    function handleDeleteAll() {
+        Alert.alert(
+            'Delete All Goals',
+            'Are you sure you want to delete all goals?',
+            [
+                {text: 'No', style: 'cancel'},
+                {text: 'Yes', onPress: () => setGoals([])},
+            ],
+            {cancelable: false}
+        );
+    }
+
+    const listSeparator = () => {
+        return <View style={styles.separator}/>
+    }
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -51,34 +67,41 @@ export default function App() {
                        cancelHandler={handleCancel}/>
             </View>
             <View style={styles.bottomView}>
-                {goals.length === 0 ? (
-                    <Text style={styles.text}>Please add a goal</Text>) : (
-                    <FlatList
-                        contentContainerStyle={styles.scrollViewContainer}
-                        renderItem={({item}) => {
-                            return (
-                                <GoalIterm goal={item} handleDelete={handleDelete}/>
-                            );}
-                        } data={goals}
-                    />)}
-                {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>*/}
-                {/*    {goals.map((goal) => {*/}
-                {/*        return (*/}
-                {/*            <View key={goal.id} style={styles.textContainer}>*/}
-                {/*                <Text style={styles.text}>{goal.text}</Text>*/}
-                {/*            </View>*/}
-                {/*        );*/}
-                {/*    })}*/}
-                {/*</ScrollView>*/}
+
+                <FlatList
+                    contentContainerStyle={styles.scrollViewContainer}
+                    data={goals}
+                    renderItem={({item}) => {
+                        return (
+                            <GoalItem goal={item} handleDelete={handleDelete}/>
+                        );
+                    }
+                    }
+                    ListEmptyComponent={
+                        <Text style={styles.noGoalsText}>No goals to show</Text>
+                    }
+                    ListHeaderComponent={
+                        goals.length > 0 ? (
+                            <Text style={styles.headerText}>My Goals</Text>
+                        ) : null
+                    }
+                    ListFooterComponent={
+                        goals.length > 0 ? (
+                            <Button
+                                title="Delete All"
+                                onPress={handleDeleteAll}
+                            />
+                        ) : null
+                    }
+                    ItemSeparatorComponent={listSeparator}
+                />
             </View>
         </SafeAreaView>
-    )
-        ;
+    );
 }
 
 const styles = StyleSheet.create({
     scrollViewContainer: {
-        alignItems: "center",
     },
     container: {
         flex: 1,
@@ -102,6 +125,24 @@ const styles = StyleSheet.create({
         flex: 4,
         backgroundColor: 'lightblue',
         alignItems: "center",
+    },
+    noGoalsText: {
+        color: 'purple',
+        fontSize: 18,
+        textAlign: 'center',
+        marginTop: 20,
+    },
+    headerText: {
+        color: 'purple',
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginVertical: 10,
+    },
+    separator: {
+        height: 3,
+        width: '100%',
+        backgroundColor: 'purple',
     },
 });
 
