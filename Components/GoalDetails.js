@@ -1,6 +1,7 @@
 import React from "react";
 import {Text, View, Button} from "react-native";
 
+/* goal is passed as a prop from the parent component */
 export const GoalDetails = ({navigation, route}) => {
     console.log("route", route.params);
     return (
