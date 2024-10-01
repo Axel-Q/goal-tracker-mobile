@@ -59,7 +59,7 @@ export default function Home({navigation}) {
         return <View style={styles.separator}/>
     }
 
-
+    /*add back the SafeAreaView tag*/
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar style="auto"/>
