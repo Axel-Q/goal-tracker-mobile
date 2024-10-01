@@ -19,6 +19,7 @@ export default function App() {
                                   },
                                   headerTintColor: '#ffffff',
                               }}/>
+                {/* Created a native stack navigator and set Home as the initial screen.*/}
                 <Stack.Screen
                     name="Details"
                     component={GoalDetails}
