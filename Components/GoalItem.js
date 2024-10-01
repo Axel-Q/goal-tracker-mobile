@@ -1,6 +1,7 @@
 import {Button, StyleSheet, Text, View} from "react-native";
 import React from "react";
 
+/* GoalItem is a child component of GoalList */
 const GoalItem = ({goal, handleDelete, handlePress}) => {
     return (
         <View style={styles.textContainer}>
