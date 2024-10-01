@@ -7,6 +7,7 @@ import {Button} from "react-native";
 
 const Stack = createNativeStackNavigator();
 
+/* App component */
 export default function App() {
     return (
         <NavigationContainer>
