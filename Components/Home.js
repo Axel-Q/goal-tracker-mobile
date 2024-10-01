@@ -59,6 +59,7 @@ export default function Home({navigation}) {
         return <View style={styles.separator}/>
     }
 
+    /*add and change background color and tint"*/
     /*add back the SafeAreaView tag*/
     return (
         <SafeAreaView style={styles.container}>
