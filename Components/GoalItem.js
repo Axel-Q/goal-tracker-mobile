@@ -1,8 +1,10 @@
 import {Button, StyleSheet, Text, View} from "react-native";
 import React from "react";
+import {useNavigation} from "@react-navigation/native";
 
 /* GoalItem is a child component of GoalList */
-const GoalItem = ({goal, handleDelete, handlePress}) => {
+const GoalItem = ({goal, handleDelete}) => {
+    const navigation = useNavigation();
     return (
         <View style={styles.textContainer}>
             <Text style={styles.text}>{goal.text}</Text>
@@ -20,17 +22,10 @@ const GoalItem = ({goal, handleDelete, handlePress}) => {
                     color="black"
                     title="i"
                     onPress={() =>{
-                        handlePress(goal);
+                        navigation.navigate('Details', {goal: goal});
                     }}
                 />
             </View>
-            {/*<Button*/}
-            {/*    color='darkgreen'*/}
-            {/*    title="X"*/}
-            {/*    onPress={() => {*/}
-            {/*        handleDelete(goal.id);*/}
-            {/*    }}*/}
-            {/*/>*/}
         </View>
     );
 };

@@ -50,11 +50,6 @@ export default function Home({navigation}) {
         );
     }
 
-    function handlePressGoal(pressGoal) {
-        console.log("handlePress", pressGoal);
-        navigation.navigate('Details', {goal: pressGoal});
-    }
-
     const listSeparator = () => {
         return <View style={styles.separator}/>
     }
@@ -79,7 +74,7 @@ export default function Home({navigation}) {
                     data={goals}
                     renderItem={({item}) => {
                         return (
-                            <GoalItem goal={item} handleDelete={handleDelete} handlePress={handlePressGoal}/>
+                            <GoalItem goal={item} handleDelete={handleDelete} />
                         );
                     }
                     }
