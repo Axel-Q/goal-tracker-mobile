@@ -28,17 +28,6 @@ export default function App() {
                         const goalText = route.params?.goal?.text || 'Details';
                         return {
                             title: goalText,
-                            headerRight: () => {
-                                return (
-                                    <Button
-                                        title="Warning"
-                                        onPress={() => {
-                                            console.log("Warning");
-                                            console.log("routr", route.params);
-                                        }}
-                                    />
-                                );
-                            },
                         };
                     }}
                 />
