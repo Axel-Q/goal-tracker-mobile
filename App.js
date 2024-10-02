@@ -11,14 +11,15 @@ const Stack = createNativeStackNavigator();
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator screenOptions={{
+                headerStyle: {
+                    backgroundColor: '#009783',
+                },
+                headerTintColor: '#ffffff',
+            }}>
                 <Stack.Screen name="Home" component={Home}
                               options={{
                                   title: 'All goals',
-                                  headerStyle: {
-                                      backgroundColor: '#009783',
-                                  },
-                                  headerTintColor: '#ffffff',
                               }}/>
                 <Stack.Screen
                     name="Details"
