@@ -1,17 +1,36 @@
 import {Button, StyleSheet, Text, View} from "react-native";
 import React from "react";
 
-const GoalItem = ({goal, handleDelete}) => {
+/* GoalItem is a child component of GoalList */
+const GoalItem = ({goal, handleDelete, handlePress}) => {
     return (
         <View style={styles.textContainer}>
             <Text style={styles.text}>{goal.text}</Text>
-            <Button
-                color='darkgreen'
-                title="X"
-                onPress={() => {
-                    handleDelete(goal.id);
-                }}
-            />
+            <View style={styles.buttonStyle}>
+                <Button
+                    color="black"
+                    title="X"
+                    onPress={() => {
+                        handleDelete(goal.id);
+                    }}
+                />
+            </View>
+            <View style={styles.buttonStyle}>
+                <Button
+                    color="black"
+                    title="i"
+                    onPress={() =>{
+                        handlePress(goal);
+                    }}
+                />
+            </View>
+            {/*<Button*/}
+            {/*    color='darkgreen'*/}
+            {/*    title="X"*/}
+            {/*    onPress={() => {*/}
+            {/*        handleDelete(goal.id);*/}
+            {/*    }}*/}
+            {/*/>*/}
         </View>
     );
 };
@@ -26,9 +45,13 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center",
     },
     text: {
         color: "white",
         fontSize: 20,
+    },
+    buttonStyle: {
+        margin: 5,
     },
 });
