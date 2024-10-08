@@ -26,6 +26,7 @@ const GoalItem = ({goal, handleDelete}) => {
                         handleDelete(goal.id);
                     }}
                 >
+                    {/*Delete Button’s Icon    */}
                     <FontAwesome name="trash" size={24} color="black"/>
                 </PressableButton>
             </Pressable>
