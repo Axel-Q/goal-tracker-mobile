@@ -25,6 +25,9 @@ const GoalItem = ({goal, handleDelete}) => {
                     onPressHandler={() => {
                         handleDelete(goal.id);
                     }}
+                    longPressHandler={() => {
+                        console.log("long press");
+                    }}
                 >
                     {/*Delete Button’s Icon    */}
                     <FontAwesome name="trash" size={24} color="black"/>
