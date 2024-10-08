@@ -12,28 +12,18 @@ export const GoalDetails = ({navigation, route}) => {
             title: "Warning",
         });
     }
-    useEffect(
-        () => {
-            navigation.setOptions({
-                headerRight: () => (
-                    <TouchableOpacity>
-                        <Button
-                            onPress={handleWarning}
-                            title="Warning"
-                            color='red'
-                        />
-                    </TouchableOpacity>
-                )
-            });
-        }
-    )
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => {
+                return <Button title="Warning" color="pink" onPress={handleWarning}/>;
+            }
+        });
+    }, [navigation]);
     console.log("route", route.params);
-    return (
-        <View>
-            {route.params ? (
-                    <Text style={warning ? styles.warning : null}
-                    >GoalDetails with id {route.params.goal.id} and text is {route.params.goal.text}</Text>)
-                : (<Text>More details</Text>)}
+    return (<View>
+            {route.params ? (<Text style={warning ? styles.warning : null}
+            >GoalDetails with id {route.params.goal.id} and text is {route.params.goal.text}</Text>) : (
+                <Text style={warning ? styles.warning : null}>More details</Text>)}
             <Button
                 title="More details"
                 onPress={() => {

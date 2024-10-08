@@ -1,31 +1,42 @@
-import {Button, StyleSheet, Text, View} from "react-native";
+import {Button, Pressable, StyleSheet, Text, View} from "react-native";
 import React from "react";
 import {useNavigation} from "@react-navigation/native";
+import PressableButton from "./PressableButton";
+import {FontAwesome} from "@expo/vector-icons";
 
 /* GoalItem is a child component of GoalList */
 const GoalItem = ({goal, handleDelete}) => {
     const navigation = useNavigation();
     return (
         <View style={styles.textContainer}>
-            <Text style={styles.text}>{goal.text}</Text>
-            <View style={styles.buttonStyle}>
-                <Button
-                    color="black"
-                    title="X"
-                    onPress={() => {
+            <Pressable
+                android_ripple={{color: 'red', borderless: true, radius: 30}}
+                style={({pressed}) => {
+                    return [styles.barContainer, pressed && styles.pressedStyle];
+                }}
+                onPress={function () {
+                    navigation.navigate("Details", {goal: goal});
+                }}
+            >
+                <Text style={styles.text}>{goal.text}</Text>
+                {/*<View style={styles.buttonStyle}>*/}
+                {/*    <Button*/}
+                {/*        color="black"*/}
+                {/*        title="X"*/}
+                {/*        onPress={() => {*/}
+                {/*            handleDelete(goal.id);*/}
+                {/*        }}*/}
+                {/*    />*/}
+                {/*</View>*/}
+                <PressableButton
+                    customStyle={styles.buttonStyle}
+                    onPressHandler={() => {
                         handleDelete(goal.id);
                     }}
-                />
-            </View>
-            <View style={styles.buttonStyle}>
-                <Button
-                    color="black"
-                    title="i"
-                    onPress={() =>{
-                        navigation.navigate('Details', {goal: goal});
-                    }}
-                />
-            </View>
+                >
+                    <FontAwesome name="trash" size={24} color="black"/>
+                </PressableButton>
+            </Pressable>
         </View>
     );
 };
@@ -34,19 +45,27 @@ export default GoalItem;
 
 const styles = StyleSheet.create({
     textContainer: {
-        marginVertical: 25,
-        backgroundColor: "#faa5a5",
-        padding: 40,
+        marginVertical: 15,
+        padding: 10,
         borderRadius: 15,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
     },
     text: {
         color: "white",
-        fontSize: 20,
+        fontSize: 30,
     },
     buttonStyle: {
-        margin: 5,
+        marginLeft: 15,
+        backgroundColor: "grey",
+        padding: 5,
+    },
+    barContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: 15,
+        backgroundColor: "#faa5a5",
+    },
+    pressedStyle: {
+        backgroundColor: "#5ea9ff",
     },
 });
