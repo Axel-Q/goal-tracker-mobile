@@ -10,6 +10,7 @@ const GoalItem = ({goal, handleDelete}) => {
     return (
         <View style={styles.textContainer}>
             <Pressable
+                {/*Add android_ripple prop to the pressable component to give users a visual feedback */}
                 android_ripple={{color: 'red', borderless: true, radius: 30}}
                 style={({pressed}) => {
                     return [styles.barContainer, pressed && styles.pressedStyle];
