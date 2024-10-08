@@ -50,8 +50,13 @@ export default function Home({navigation}) {
         );
     }
 
-    const listSeparator = () => {
-        return <View style={styles.separator}/>
+    const listSeparator = ({highlighted}) => {
+        return <View
+            style={[
+                styles.separator,
+                highlighted ? {backgroundColor: 'red'} : {backgroundColor: 'grey'}
+            ]}
+        />
     }
 
     /*add and change background color and tint"*/
@@ -72,9 +77,10 @@ export default function Home({navigation}) {
                 <FlatList
                     contentContainerStyle={styles.scrollViewContainer}
                     data={goals}
-                    renderItem={({item}) => {
+                    renderItem={({item, separators }) => {
                         return (
-                            <GoalItem goal={item} handleDelete={handleDelete} />
+                            <GoalItem goal={item} handleDelete={handleDelete} onPressIn={() => separators.highlight()}
+                            onPressOut={() => separators.unhighlight()} />
                         );
                     }
                     }
@@ -102,8 +108,7 @@ export default function Home({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    scrollViewContainer: {
-    },
+    scrollViewContainer: {},
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -143,7 +148,7 @@ const styles = StyleSheet.create({
     separator: {
         height: 3,
         width: '100%',
-        backgroundColor: 'purple',
+        backgroundColor: 'grey',
     },
 });
 
