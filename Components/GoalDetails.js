@@ -1,7 +1,9 @@
 import React from "react";
-import {Text, View, Button} from "react-native";
+import {Text, View, Button, Pressable} from "react-native";
 import {StyleSheet, TouchableOpacity} from "react-native";
 import {useEffect, useState} from "react";
+import PressableButton from "./PressableButton";
+import {FontAwesome} from "@expo/vector-icons";
 
 /* goal is passed as a prop from the parent component */
 export const GoalDetails = ({navigation, route}) => {
@@ -12,28 +14,20 @@ export const GoalDetails = ({navigation, route}) => {
             title: "Warning",
         });
     }
-    useEffect(
-        () => {
-            navigation.setOptions({
-                headerRight: () => (
-                    <TouchableOpacity>
-                        <Button
-                            onPress={handleWarning}
-                            title="Warning"
-                            color='red'
-                        />
-                    </TouchableOpacity>
-                )
-            });
-        }
-    )
+    useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => {
+                return <PressableButton onPressHandler={handleWarning} customStyle={styles.buttonStyle}>
+                    <FontAwesome name="warning" size={24} color="black"/>
+                    </PressableButton>
+            }
+        });
+    }, [navigation]);
     console.log("route", route.params);
-    return (
-        <View>
-            {route.params ? (
-                    <Text style={warning ? styles.warning : null}
-                    >GoalDetails with id {route.params.goal.id} and text is {route.params.goal.text}</Text>)
-                : (<Text>More details</Text>)}
+    return (<View>
+            {route.params ? (<Text style={warning ? styles.warning : null}
+            >GoalDetails with id {route.params.goal.id} and text is {route.params.goal.text}</Text>) : (
+                <Text style={warning ? styles.warning : null}>More details</Text>)}
             <Button
                 title="More details"
                 onPress={() => {
@@ -48,5 +42,10 @@ export const GoalDetails = ({navigation, route}) => {
 const styles = StyleSheet.create({
     warning: {
         color: 'red',
+    },
+    buttonStyle: {
+        backgroundColor: "pink",
+        padding: 5,
+        margin: 10,
     },
 });

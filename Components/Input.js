@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     input: {borderColor: "purple", borderWidth: 2, padding: 5},
-    buttonContainer: {flexDirection: 'row', justifyContent: 'space-between', width: '60%'},
+    buttonContainer: {flexDirection: 'row', justifyContent: 'space-between', width: '60%', alignItems: "center"},
     imageContainer: {flex: 1, justifyContent: 'center', alignItems: 'center'},
     image: {
         width: 100,

@@ -25,7 +25,7 @@ export default function App() {
                     name="Details"
                     component={GoalDetails}
                     options={({navigation, route}) => {
-                        const goalText = route.params?.goal?.text || 'Details';
+                        const goalText = route.params ? route.params.goal.text : "Details";
                         return {
                             title: goalText,
                         };
