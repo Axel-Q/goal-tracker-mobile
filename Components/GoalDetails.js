@@ -1,7 +1,9 @@
 import React from "react";
-import {Text, View, Button} from "react-native";
+import {Text, View, Button, Pressable} from "react-native";
 import {StyleSheet, TouchableOpacity} from "react-native";
 import {useEffect, useState} from "react";
+import PressableButton from "./PressableButton";
+import {FontAwesome} from "@expo/vector-icons";
 
 /* goal is passed as a prop from the parent component */
 export const GoalDetails = ({navigation, route}) => {
@@ -15,7 +17,9 @@ export const GoalDetails = ({navigation, route}) => {
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => {
-                return <Button title="Warning" color="pink" onPress={handleWarning}/>;
+                return <PressableButton onPressHandler={handleWarning} customStyle={styles.buttonStyle}>
+                    <FontAwesome name="warning" size={24} color="black"/>
+                    </PressableButton>
             }
         });
     }, [navigation]);
@@ -38,5 +42,10 @@ export const GoalDetails = ({navigation, route}) => {
 const styles = StyleSheet.create({
     warning: {
         color: 'red',
+    },
+    buttonStyle: {
+        backgroundColor: "pink",
+        padding: 5,
+        margin: 10,
     },
 });
