@@ -3,7 +3,6 @@ import React from "react";
 
 const PressableButton = ({ children, onPressHandler, customStyle  }) => {
   return (
-      /*Wrap everything inside the <View> in GoalItem in a <Pressable> component*/
     <Pressable
       onPress={onPressHandler}
       style={({ pressed }) => {
