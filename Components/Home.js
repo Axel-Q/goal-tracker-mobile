@@ -68,7 +68,6 @@ export default function Home({navigation}) {
                        cancelHandler={handleCancel}/>
             </View>
             <View style={styles.bottomView}>
-
                 <FlatList
                     contentContainerStyle={styles.scrollViewContainer}
                     data={goals}
