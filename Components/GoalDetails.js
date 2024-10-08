@@ -1,13 +1,38 @@
 import React from "react";
 import {Text, View, Button} from "react-native";
+import {StyleSheet, TouchableOpacity} from "react-native";
+import {useEffect, useState} from "react";
 
 /* goal is passed as a prop from the parent component */
 export const GoalDetails = ({navigation, route}) => {
+    const [warning, setWarning] = useState(false);
+    const handleWarning = () => {
+        setWarning(true);
+        navigation.setOptions({
+            title: "Warning",
+        });
+    }
+    useEffect(
+        () => {
+            navigation.setOptions({
+                headerRight: () => (
+                    <TouchableOpacity>
+                        <Button
+                            onPress={handleWarning}
+                            title="Warning"
+                            color='red'
+                        />
+                    </TouchableOpacity>
+                )
+            });
+        }
+    )
     console.log("route", route.params);
     return (
         <View>
             {route.params ? (
-                    <Text>GoalDetails with id {route.params.goal.id} and text is {route.params.goal.text}</Text>)
+                    <Text style={warning ? styles.warning : null}
+                    >GoalDetails with id {route.params.goal.id} and text is {route.params.goal.text}</Text>)
                 : (<Text>More details</Text>)}
             <Button
                 title="More details"
@@ -19,3 +44,9 @@ export const GoalDetails = ({navigation, route}) => {
 
     );
 }
+
+const styles = StyleSheet.create({
+    warning: {
+        color: 'red',
+    },
+});
