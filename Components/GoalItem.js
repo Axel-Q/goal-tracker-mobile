@@ -5,7 +5,7 @@ import PressableButton from "./PressableButton";
 import {FontAwesome} from "@expo/vector-icons";
 
 /* GoalItem is a child component of GoalList */
-const GoalItem = ({goal, handleDelete}) => {
+const GoalItem = ({goal, handleDelete, onPressIn, onPressOut}) => {
     const navigation = useNavigation();
     return (
         <View style={styles.textContainer}>
@@ -17,8 +17,10 @@ const GoalItem = ({goal, handleDelete}) => {
                 onPress={function () {
                     navigation.navigate("Details", {goal: goal});
                 }}
+                onPressIn={onPressIn}
+                onPressOut={onPressOut}
                 onLongPress={() => {
-                    Alert.alert("Delete Goal", "Are you sure you want to delete this goal?", [ {
+                    Alert.alert("Delete Goal", "Are you sure you want to delete this goal?", [{
                         text: "Yes",
                         onPress: () => {
                             handleDelete(goal.id);
@@ -27,8 +29,8 @@ const GoalItem = ({goal, handleDelete}) => {
                         text: "No",
                         onPress: () => console.log("No Pressed"),
                         style: "cancel",
-                    }, ], {cancelable: true});
-                    }
+                    },], {cancelable: true});
+                }
                 }
             >
                 <Text style={styles.text}>{goal.text}</Text>
