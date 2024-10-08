@@ -10,7 +10,6 @@ const GoalItem = ({goal, handleDelete}) => {
     return (
         <View style={styles.textContainer}>
             <Pressable
-                {/*Add android_ripple prop to the pressable component to give users a visual feedback */}
                 android_ripple={{color: 'red', borderless: true, radius: 30}}
                 style={({pressed}) => {
                     return [styles.barContainer, pressed && styles.pressedStyle];
@@ -20,15 +19,7 @@ const GoalItem = ({goal, handleDelete}) => {
                 }}
             >
                 <Text style={styles.text}>{goal.text}</Text>
-                {/*<View style={styles.buttonStyle}>*/}
-                {/*    <Button*/}
-                {/*        color="black"*/}
-                {/*        title="X"*/}
-                {/*        onPress={() => {*/}
-                {/*            handleDelete(goal.id);*/}
-                {/*        }}*/}
-                {/*    />*/}
-                {/*</View>*/}
+
                 <PressableButton
                     customStyle={styles.buttonStyle}
                     onPressHandler={() => {
