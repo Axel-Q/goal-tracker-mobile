@@ -10,6 +10,7 @@ export async function writeToDB(data, collectionName) {
     }
 }
 
+/*delete a document from the database*/
 export async function deleteFromDB(id, collectionName) {
     try {
         await deleteDoc(doc(db, collectionName, id));
