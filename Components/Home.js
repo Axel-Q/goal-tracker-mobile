@@ -42,6 +42,7 @@ export default function Home({navigation}) {
         const newGoal = {text: data};
         console.log("newGoal", newGoal);
         writeToDB(newGoal, "goals");
+        console.log("goals", goals);
         setModalVisible(false);
     }
 
