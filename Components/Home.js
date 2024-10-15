@@ -11,7 +11,7 @@ import {db} from "../Firebase/firebaseSetup";
 import PressableButton from "./PressableButton";
 
 export default function Home({navigation}) {
-    console.log("db", db);
+    // console.log("db", db);
     const appName = "Axel's APP";
     const collectionName = "goals";
     const [inputData, setInputData] = useState('');
@@ -41,10 +41,6 @@ export default function Home({navigation}) {
         // add the new goal to the list of goals
         const newGoal = {text: data};
         console.log("newGoal", newGoal);
-        // make a new goal and store the recent goals to the list of goals using  state setter function
-        // setGoals((currentGoals) => {
-        //     return [...currentGoals, newGoal];
-        // })
         writeToDB(newGoal, "goals");
         setModalVisible(false);
     }
