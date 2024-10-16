@@ -29,7 +29,12 @@ export async function deleteAll(collectionName) {
         console.log("delete all", err);
     }
 }
-
+/*
+* updateDoc only updates existing fields. If the field doesn't exist, it won't add it to the document.
+*
+* In this case, since we're adding a new field that doesn't exist yet in the document,
+* we should use setDoc with {merge: true} instead of updateDoc
+* */
 export async function addWarning(goalId) {
     try {
         const goalRef = doc(db, "goals", goalId);
