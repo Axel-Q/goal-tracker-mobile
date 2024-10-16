@@ -1,4 +1,4 @@
-import {addDoc, collection, deleteDoc, doc, getDocs} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDocs, setDoc} from "firebase/firestore";
 import {db} from "./firebaseSetup";
 
 export async function writeToDB(data, collectionName) {
@@ -27,5 +27,17 @@ export async function deleteAll(collectionName) {
         });
     } catch (err) {
         console.log("delete all", err);
+    }
+}
+
+export async function addWarning(goalId) {
+    try {
+        const goalRef = doc(db, "goals", goalId);
+        await setDoc(goalRef,{
+            warning: true,
+        }, {merge: true});
+        console.log("Warning added successfully");
+    } catch (err) {
+        console.log("error in add warning", err);
     }
 }
