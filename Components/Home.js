@@ -1,13 +1,19 @@
 import {StatusBar} from 'expo-status-bar';
 import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, FlatList, Alert} from 'react-native';
-import {useState, useRef} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import Header from "./Header";
 import React from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
+import {deleteFromDB, writeToDB, deleteAll} from "../Firebase/firestoreHelper";
+import {collection, onSnapshot} from "firebase/firestore";
+import {db} from "../Firebase/firebaseSetup";
+import PressableButton from "./PressableButton";
 
 export default function Home({navigation}) {
+    // console.log("db", db);
     const appName = "Axel's APP";
+    const collectionName = "goals";
     const [inputData, setInputData] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [goals, setGoals] = useState([]);
@@ -15,17 +21,29 @@ export default function Home({navigation}) {
         setModalVisible(true);
     }
 
+    useEffect(() => {
+        onSnapshot(collection(db, collectionName), (querySnapshot) => {
+            let newArray = [];
+            if (!querySnapshot.empty) {
+                querySnapshot.forEach((docSnapshot) => {
+                    console.log(docSnapshot.id);
+                    newArray.push({...docSnapshot.data(), id: docSnapshot.id});
+                });
+            }
+            setGoals(newArray);
+        });
+    }, []);
+
     function handleInputData(data) {
         console.log("console logout ", data);
         setInputData("study: " + data);
         setModalVisible(false);
         // add the new goal to the list of goals
-        const newGoal = {id: Math.random(), text: data};
+        const newGoal = {text: data};
         console.log("newGoal", newGoal);
-        // make a new goal and store the recent goals to the list of goals using  state setter function
-        setGoals((currentGoals) => {
-            return [...currentGoals, newGoal];
-        })
+        writeToDB(newGoal, "goals");
+        console.log("goals", goals);
+        setModalVisible(false);
     }
 
     function handleCancel() {
@@ -33,18 +51,16 @@ export default function Home({navigation}) {
     }
 
     function handleDelete(id) {
-        setGoals((currentGoals) => {
-            return currentGoals.filter((goal) => goal.id !== id);
-        });
+        deleteFromDB(id, collectionName);
     }
 
-    function handleDeleteAll() {
+    function handleDeleteAll(collectionName) {
         Alert.alert(
             'Delete All Goals',
             'Are you sure you want to delete all goals?',
             [
                 {text: 'No', style: 'cancel'},
-                {text: 'Yes', onPress: () => setGoals([])},
+                {text: 'Yes', onPress: () => deleteAll('goals')},
             ],
             {cancelable: false}
         );
@@ -66,7 +82,15 @@ export default function Home({navigation}) {
             <StatusBar style="auto"/>
             <View style={styles.topView}>
                 <Header name={appName}/>
-                <Button title={'Add a goal'} onPress={handleVisibility}/>
+                {/*<Button title={'Add a goal'} onPress={handleVisibility}/>*/}
+                <PressableButton
+                    onPressHandler={() => {
+                        setModalVisible(true);
+                    }}
+                    componentStyle={styles.buttonStyle}
+                >
+                    <Text style={styles.textStyle}>Add a goal</Text>
+                </PressableButton>
                 <Input textInputFocus={true}
                        inputHandler={handleInputData}
                        visible={modalVisible}
@@ -77,10 +101,10 @@ export default function Home({navigation}) {
                 <FlatList
                     contentContainerStyle={styles.scrollViewContainer}
                     data={goals}
-                    renderItem={({item, separators }) => {
+                    renderItem={({item, separators}) => {
                         return (
                             <GoalItem goal={item} handleDelete={handleDelete} onPressIn={() => separators.highlight()}
-                            onPressOut={() => separators.unhighlight()} />
+                                      onPressOut={() => separators.unhighlight()}/>
                         );
                     }
                     }
