@@ -41,7 +41,7 @@ export const GoalDetails = ({navigation, route}) => {
                     navigation.push("Details");
                 }}
             />
-            <GoalUsers/>
+            <GoalUsers id={route.params.goal.id}/>
         </View>
 
     );
