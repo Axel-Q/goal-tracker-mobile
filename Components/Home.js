@@ -22,7 +22,7 @@ export default function Home({navigation}) {
     }
 
     useEffect(() => {
-        onSnapshot(collection(db, collectionName), (querySnapshot) => {
+        const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
             let newArray = [];
             if (!querySnapshot.empty) {
                 querySnapshot.forEach((docSnapshot) => {
@@ -32,6 +32,9 @@ export default function Home({navigation}) {
             }
             setGoals(newArray);
         });
+        return () => {
+            unsubscribe();
+        }
     }, []);
 
     function handleInputData(data) {

@@ -4,25 +4,31 @@ import {StyleSheet, TouchableOpacity} from "react-native";
 import {useEffect, useState} from "react";
 import PressableButton from "./PressableButton";
 import {FontAwesome} from "@expo/vector-icons";
+import {addWarning} from "../Firebase/firestoreHelper";
 
 /* goal is passed as a prop from the parent component */
 export const GoalDetails = ({navigation, route}) => {
     const [warning, setWarning] = useState(false);
-    const handleWarning = () => {
-        setWarning(true);
-        navigation.setOptions({
-            title: "Warning",
-        });
-    }
+    const handleWarning = async () => {
+        if (route.params && route.params.goal.id) {
+            await addWarning(route.params.goal.id);
+            setWarning(true);
+            navigation.setOptions({
+                title: "Warning",
+            });
+        }
+    };
+
+
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => {
                 return <PressableButton onPressHandler={handleWarning} customStyle={styles.buttonStyle}>
                     <FontAwesome name="warning" size={24} color="black"/>
-                    </PressableButton>
+                </PressableButton>
             }
         });
-    }, [navigation]);
+    }, [navigation, route.params]);
     console.log("route", route.params);
     return (<View>
             {route.params ? (<Text style={warning ? styles.warning : null}
