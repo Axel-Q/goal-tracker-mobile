@@ -1,11 +1,27 @@
 import {StatusBar} from 'expo-status-bar';
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+    StyleSheet,
+    Text,
+    useWindowDimensions,
+} from "react-native";
 
 export default function Header({name}) {
+    const {height} = useWindowDimensions();
+    console.log("Current height:", height);
 
     return (
-        <Text style={styles.text}>Welcome to {name}</Text>
+        <Text
+            style={[
+                styles.text,
+                {
+                    paddingVertical: height < 415 ? 0 : 10,
+                    paddingHorizontal: height < 415 ? 0 : 10,
+                },
+            ]}
+        >
+            Welcome to {name}
+        </Text>
     );
 }
 

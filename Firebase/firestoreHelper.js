@@ -48,7 +48,7 @@ export async function addWarning(goalId) {
     }
 }
 
-export async function readAllDocs(collectionName) {
+export async function getAllDocs(collectionName) {
     try {
         const querySnapshot = await getDocs(collection(db, collectionName));
         let newArray = [];
