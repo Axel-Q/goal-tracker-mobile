@@ -15,6 +15,10 @@ const firebaseConfig = {
     appId: process.env.EXPO_PUBLIC_appId,
 };
 
+
+/*
+* Authentication State Persistence
+* */
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
