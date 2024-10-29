@@ -3,7 +3,9 @@ import {View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity} from
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../Firebase/firebaseSetup";
 
-
+/**
+* Signup Components
+* */
 export default function Signup({navigation}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
