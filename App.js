@@ -54,6 +54,9 @@ const AppStack = (<>
 export default function App() {
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
     useEffect(() => {
+        /*
+        * Observing Firebase User State
+        * */
         onAuthStateChanged(auth, (user) => {
             //based on the user variable update the state variable
             if (user) {
