@@ -28,6 +28,9 @@ export default function Signup({navigation}) {
             Alert.alert("password and confirm password should be the same");
             return;
         }
+        /*
+        * Create a New User
+        * */
         try {
             const userCred = await createUserWithEmailAndPassword(
                 auth,
