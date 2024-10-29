@@ -35,6 +35,7 @@ export default function Profile() {
 
     return (
         <View>
+            <Text>Email: {auth.currentUser.email}</Text>
             <Text>Profile of user with id: {auth.currentUser.uid}</Text>
         </View>
     );
