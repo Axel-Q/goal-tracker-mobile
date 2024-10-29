@@ -47,9 +47,16 @@ export default function Signup({navigation}) {
                 Alert.alert("Password is missing");
             } else if (err.code === "auth/weak-password") {
                 Alert.alert("Password should be at least 6 characters");
+            } else if (err.code === "auth/email-already-in-use") {
+                Alert.alert("Email is already in use");}
+            else if (err.code === "auth/network-request-failed") {
+                Alert.alert("Network error, please try again later");
+            } else if (err.code === "auth/too-many-requests") {
+                Alert.alert("Too many requests, please try again later");
+            } else if (err.code === "auth/user-disabled") {
+                Alert.alert("User is disabled, please contact support");
             } else {
-                Alert.alert(err.message);
-            }
+                Alert.alert(err);}
         }
     };
     return (
