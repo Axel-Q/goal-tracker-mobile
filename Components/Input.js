@@ -15,7 +15,9 @@ export default function Input({textInputFocus, inputHandler, visible, cancelHand
             setCanConfirm(false);
         }
     }, [text]);
-
+    /*
+    * 123
+    * */
     const handleConfirm = () => {
         setText('');
         inputHandler({text, imageUri});
