@@ -11,7 +11,6 @@ const ImageManager = ({ imageUriHandler }) => {
             return true;
         }
         const permissionResponse = await requestPermission();
-        console.log('permission response', permissionResponse);
         return permissionResponse.granted;
     }
 
