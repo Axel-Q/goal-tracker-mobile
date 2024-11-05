@@ -63,6 +63,7 @@ export default function Home({navigation}) {
     }
 
     async function handleInputData(data) {
+        console.log("data", data);
         let imageUri = "";
         if (data.imageUri) {
             imageUri = await retrieveAndUploadImage(data.imageUri);
@@ -70,6 +71,7 @@ export default function Home({navigation}) {
         console.log("retrieved ", imageUri);
         setInputData("study: " + data);
         setModalVisible(false);
+        console.log("imageUri", imageUri);
         // add the new goal to the list of goals
         const newGoal = {
             text: data.text,
