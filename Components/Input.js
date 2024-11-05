@@ -1,10 +1,12 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {TextInput, Text, Button, View, StyleSheet, Modal, Alert, Image} from 'react-native';
+import ImageManager from "./ImageManager";
 
 export default function Input({textInputFocus, inputHandler, visible, cancelHandler}) {
     const [text, setText] = useState('');
     const [blur, setBlur] = useState(false);
     const [canConfirm, setCanConfirm] = useState(false);
+    const [imageUri, setImageUri] = useState("");
 
     useEffect(() => {
         if (text.length >= 3) {
@@ -16,7 +18,7 @@ export default function Input({textInputFocus, inputHandler, visible, cancelHand
 
     const handleConfirm = () => {
         setText('');
-        inputHandler(text);
+        inputHandler({text, imageUri});
     }
 
     const handleCancel = () => {
@@ -32,6 +34,11 @@ export default function Input({textInputFocus, inputHandler, visible, cancelHand
                 {text: 'No', onPress: () => console.log('No Pressed'), style: 'cancel'},
             ],
             {cancelable: true});
+    }
+
+    function imageUriHandler(uri) {
+        console.log("input ", uri);
+        setImageUri(uri);
     }
 
 
@@ -69,6 +76,7 @@ export default function Input({textInputFocus, inputHandler, visible, cancelHand
                     ) : (
                         text && <Text>{text.length}</Text>
                     )}
+                    <ImageManager imageUriHandler={imageUriHandler}/>
                     <View style={styles.buttonContainer}>
                         <Button disabled={!canConfirm} title={"Confirm"} onPress={() => handleConfirm()}/>
                         <Button title={"Cancel"} onPress={() => handleCancel()}/>
