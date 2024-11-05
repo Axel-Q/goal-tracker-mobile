@@ -110,7 +110,7 @@ export default function Home({navigation}) {
         />
     }
 
-    /*add and change background color and tint"*/
+
     /*add back the SafeAreaView tag*/
     return (
         <SafeAreaView style={styles.container}>

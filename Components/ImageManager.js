@@ -12,6 +12,7 @@ const ImageManager = ({ imageUriHandler }) => {
             return true;
         }
         const permissionResponse = await requestPermission();
+        console.log('permission response', permissionResponse);
         return permissionResponse.granted;
     }
 
@@ -33,8 +34,8 @@ const ImageManager = ({ imageUriHandler }) => {
     }
 
     return (
-        <View>
-            <Button title="Take an Image" onPress={takeImageHandler}/>
+        <View style={styles.container}>
+            <Button title="Take an Image" onPress={takeImageHandler} />
             {imageUri && (
                 <Image
                     source={{
@@ -49,4 +50,4 @@ const ImageManager = ({ imageUriHandler }) => {
 
 export default ImageManager;
 
-const styles = StyleSheet.create({image: {width: 100, height: 100}});
+const styles = StyleSheet.create({image: {width: 100, height: 100}, container: {margin: 10}});
