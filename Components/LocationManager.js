@@ -33,7 +33,6 @@ const LocationManager = ({navigation}) => {
                 setLocation(userData.location);
             }
         }
-
         getUserData();
     }, []);
 
