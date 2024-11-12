@@ -80,7 +80,6 @@ export default function Home({navigation}) {
         }
         if (imageUri) {
             newGoal.imageUri = imageUri;
-
         }
         console.log("newGoal", newGoal);
         writeToDB(newGoal, "goals");
