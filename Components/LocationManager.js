@@ -1,16 +1,46 @@
 import {Alert, Button, StyleSheet, Image, View} from "react-native";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import * as Location from "expo-location";
 import {mapsApiKey} from "@env";
 import {Dimensions} from "react-native";
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
+import {getADoc, writeWithIdToDB} from "../Firebase/firestoreHelper";
+import {auth} from "../Firebase/firebaseSetup";
+
 
 const windowWidth = Dimensions.get("window").width;
 
 const LocationManager = ({navigation}) => {
+    const route = useRoute();
     console.log("Navigation Object:", navigation);
     const [response, requestPermission] = Location.useForegroundPermissions();
     const [location, setLocation] = useState(null);
+    useEffect(() => {
+        if (route.params) {
+            console.log(
+                "route.params in locationamnager ",
+                route.params.selectedLocation
+            );
+            setLocation(route.params.selectedLocation);
+            //update the location variable with the received data
+        }
+    }, [route]);
+
+    useEffect(() => {
+        async function getUserData() {
+            const userData = await getADoc("users", auth.currentUser.uid);
+            if (userData) {
+                setLocation(userData.location);
+            }
+        }
+
+        getUserData();
+    }, []);
+
+    function saveUserLocation() {
+        writeWithIdToDB({location}, "users", auth.currentUser.uid);
+        navigation.navigate("Home");
+    }
 
     async function verifyPermission() {
         console.log(response);
@@ -60,6 +90,11 @@ const LocationManager = ({navigation}) => {
                     style={styles.image}
                 />
             )}
+            <Button
+                disabled={!location}
+                title="Save My Location"
+                onPress={saveUserLocation}
+            />
         </View>
     );
 };

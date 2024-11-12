@@ -34,6 +34,7 @@ const Map = () => {
                     //navigate back to profile and pass the selected location
                     navigation.navigate("Profile", {selectedLocation});
                 }}
+                disabled={!selectedLocation}
             />
         </>
     );
