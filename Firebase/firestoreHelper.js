@@ -50,6 +50,14 @@ export async function addWarning(goalId) {
     }
 }
 
+export async function writeWithIdToDB(data, collectionName, id) {
+  try {
+    await setDoc(doc(db, collectionName, id), data, { merge: true });
+  } catch (err) {
+    console.log("write to db ", err);
+  }
+}
+
 export async function getAllDocs(collectionName) {
     try {
         const querySnapshot = await getDocs(collection(db, collectionName));

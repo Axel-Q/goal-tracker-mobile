@@ -49,9 +49,6 @@ export default function Home({navigation}) {
     async function retrieveAndUploadImage(uri) {
         try {
             const response = await fetch(uri);
-            if (!response.ok) {
-                throw new Error("The request was not successful");
-            }
             const blob = await response.blob();
             const imageName = uri.substring(uri.lastIndexOf("/") + 1);
             const imageRef = ref(storage, `images/${imageName}`);
@@ -59,6 +56,10 @@ export default function Home({navigation}) {
             return uploadResult.metadata.fullPath;
         } catch (err) {
             console.log("retrieve and upload image ", err);
+            console.log("Error Code: ", err.code);
+            console.log("Error Message: ", err.message);
+            console.log("Error Stack: ", err.stack);
+            return null;
         }
     }
 
@@ -70,13 +71,17 @@ export default function Home({navigation}) {
         }
         console.log("retrieved ", imageUri);
         setInputData("study: " + data);
-        setModalVisible(false);
         console.log("imageUri", imageUri);
         // add the new goal to the list of goals
         const newGoal = {
             text: data.text,
             owner: auth.currentUser.uid,
-        };
+            imageUri: imageUri,
+        }
+        if (imageUri) {
+            newGoal.imageUri = imageUri;
+
+        }
         console.log("newGoal", newGoal);
         writeToDB(newGoal, "goals");
         console.log("goals", goals);
