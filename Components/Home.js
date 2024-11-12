@@ -47,37 +47,36 @@ export default function Home({navigation}) {
         }
     }, []);
 
-    async function retrieveAndUploadImage(uri) {
-        try {
-            const response = await fetch(uri);
-            if (!response.ok) {
-                throw new Error("The request was not successful");
-            }
-            const blob = await response.blob();
-            const imageName = uri.substring(uri.lastIndexOf("/") + 1);
-            const imageRef = ref(storage, `images/${imageName}`);
-            const uploadResult = await uploadBytesResumable(imageRef, blob);
-            console.log(uploadResult.metadata.fullPath);
-            return uploadResult.metadata.fullPath;
-        } catch (err) {
-            console.log("retrieve and upload image ", err);
-        }
+ async function handleImageData(uri) {
+    try {
+      const response = await fetch(uri);
+      if (!response.ok) {
+        throw new Error(`fetch error happened with status: ${response.status}`);
+      }
+      const blob = await response.blob();
+      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+      const imageRef = ref(storage, `images/${imageName}`);
+      const uploadResult = await uploadBytesResumable(imageRef, blob);
+      console.log("upload result", uploadResult);
+      return uploadResult.metadata.fullPath;
+    } catch (err) {
+      console.log("handle image data", err);
     }
+  }
 
     async function handleInputData(data) {
         console.log("data", data);
         let imageUri = "";
         if (data.imageUri) {
-            imageUri = await retrieveAndUploadImage(data.imageUri);
+            imageUri = await handleImageData(data.imageUri);
         }
         console.log("retrieved ", imageUri);
-        setInputData("study: " + data);
+        // setInputData("study: " + data);
         console.log("imageUri", imageUri);
         // add the new goal to the list of goals
         const newGoal = {
             text: data.text,
             owner: auth.currentUser.uid,
-            imageUri: imageUri,
         }
         if (imageUri) {
             newGoal.imageUri = imageUri;

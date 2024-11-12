@@ -34,6 +34,7 @@ export const GoalDetails = ({navigation, route}) => {
                 }
             }
         }
+
         getImageUrl();
     }, []);
 
@@ -55,11 +56,11 @@ export const GoalDetails = ({navigation, route}) => {
                         {route.params.goal.text} and id:{route.params.goal.id}
                     </Text>
                     {imageUri && (<Image
-                            source={{
-                                uri: imageUri,
-                            }}
-                            style={styles.image}
-                        />)}
+                        source={{
+                            uri: imageUri,
+                        }}
+                        style={styles.image}
+                    />)}
                 </View>
             ) : (<Text style={warning ? styles.warning : null}>More details</Text>)}
             <Button
@@ -68,7 +69,7 @@ export const GoalDetails = ({navigation, route}) => {
                     navigation.push("Details");
                 }}
             />
-            <GoalUsers id={route.params.goal.id}/>
+            {route.params && <GoalUsers id={route.params.goal.id}/>}
         </View>
 
     );
@@ -80,5 +81,5 @@ const styles = StyleSheet.create({
     }, buttonStyle: {
         backgroundColor: "pink", padding: 5, margin: 10,
     },
-      image: { width: 100, height: 100 },
+    image: {width: 100, height: 100},
 });
