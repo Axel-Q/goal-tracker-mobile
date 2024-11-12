@@ -27,7 +27,7 @@ export const GoalDetails = ({navigation, route}) => {
         async function getImageUrl() {
             if (route.params) {
                 try {
-                    const url = await getDownloadURL(ref(storage, route.params.goalObj.imageUri));
+                    const url = await getDownloadURL(ref(storage, route.params.goal.imageUri));
                     setImageUri(url);
                 } catch (err) {
                     console.log("get image uri ", err);

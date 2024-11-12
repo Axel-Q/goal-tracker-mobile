@@ -21,6 +21,7 @@ export default function Input({textInputFocus, inputHandler, visible, cancelHand
     const handleConfirm = () => {
         setText('');
         inputHandler({text, imageUri});
+        console.log("aoligei", text, imageUri);
     }
 
     const handleCancel = () => {

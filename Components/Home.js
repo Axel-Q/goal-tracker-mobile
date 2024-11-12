@@ -8,8 +8,9 @@ import GoalItem from "./GoalItem";
 import {deleteFromDB, writeToDB, deleteAll} from "../Firebase/firestoreHelper";
 import {collection, onSnapshot, query, where} from "firebase/firestore";
 import {auth, db, storage} from "../Firebase/firebaseSetup";
-import {ref, uploadBytesResumable, uploadBytes} from "firebase/storage";
+import {ref, uploadBytesResumable, uploadBytes, uploadString} from "firebase/storage";
 import PressableButton from "./PressableButton";
+
 
 export default function Home({navigation}) {
     // console.log("db", db);
@@ -49,17 +50,17 @@ export default function Home({navigation}) {
     async function retrieveAndUploadImage(uri) {
         try {
             const response = await fetch(uri);
+            if (!response.ok) {
+                throw new Error("The request was not successful");
+            }
             const blob = await response.blob();
             const imageName = uri.substring(uri.lastIndexOf("/") + 1);
             const imageRef = ref(storage, `images/${imageName}`);
-            const uploadResult = await uploadBytes(imageRef, blob);
+            const uploadResult = await uploadBytesResumable(imageRef, blob);
+            console.log(uploadResult.metadata.fullPath);
             return uploadResult.metadata.fullPath;
         } catch (err) {
             console.log("retrieve and upload image ", err);
-            console.log("Error Code: ", err.code);
-            console.log("Error Message: ", err.message);
-            console.log("Error Stack: ", err.stack);
-            return null;
         }
     }
 
