@@ -9,6 +9,7 @@ const windowWidth = Dimensions.get("window").width;
 
 const LocationManager = () => {
     const navigation = useNavigation();
+    console.log("Navigation Object:", navigation);
     const [response, requestPermission] = Location.useForegroundPermissions();
     const [location, setLocation] = useState(null);
 
@@ -24,7 +25,7 @@ const LocationManager = () => {
 
     function chooseLocationHandler() {
         //navigate to Map.js
-        navigation.navigate("Map");
+        navigation.push("Map");
     }
 
     async function locateUserHandler() {

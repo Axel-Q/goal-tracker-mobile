@@ -53,6 +53,8 @@ const AppStack = (<>
     <Stack.Screen name="Map" component={Map}/>
 </>);
 /* App component */
+
+
 export default function App() {
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
     useEffect(() => {

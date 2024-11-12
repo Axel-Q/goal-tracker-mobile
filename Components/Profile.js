@@ -1,7 +1,6 @@
 import {View, Text, Pressable} from "react-native";
 import React, {useLayoutEffect} from "react";
 import {auth} from "../Firebase/firebaseSetup";
-import {StackActions as navigation} from "@react-navigation/routers/src";
 import {signOut} from "firebase/auth";
 import {MaterialIcons} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/native";
