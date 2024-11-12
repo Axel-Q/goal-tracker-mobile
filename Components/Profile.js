@@ -37,7 +37,7 @@ export default function Profile() {
         <View>
             <Text>Email: {auth.currentUser.email}</Text>
             <Text>Profile of user with id: {auth.currentUser.uid}</Text>
-            <LocationManager />
+            <LocationManager navigation={navigation}/>
         </View>
     );
 }

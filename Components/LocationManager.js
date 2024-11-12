@@ -7,8 +7,7 @@ import {useNavigation} from "@react-navigation/native";
 
 const windowWidth = Dimensions.get("window").width;
 
-const LocationManager = () => {
-    const navigation = useNavigation();
+const LocationManager = ({navigation}) => {
     console.log("Navigation Object:", navigation);
     const [response, requestPermission] = Location.useForegroundPermissions();
     const [location, setLocation] = useState(null);
@@ -30,7 +29,6 @@ const LocationManager = () => {
 
     async function locateUserHandler() {
         try {
-
             const hasPermission = await verifyPermission();
             if (!hasPermission) {
                 Alert.alert("You need to give permission to use location services");
@@ -57,7 +55,7 @@ const LocationManager = () => {
             {location && (
                 <Image
                     source={{
-                        uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`,
+                        uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${process.env.EXPO_PUBLIC_mapsApiKey}`,
                     }}
                     style={styles.image}
                 />
