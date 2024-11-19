@@ -26,6 +26,7 @@ const LocationManager = ({navigation}) => {
         }
     }, [route]);
 
+
     useEffect(() => {
         async function getUserData() {
             const userData = await getADoc("users", auth.currentUser.uid);
