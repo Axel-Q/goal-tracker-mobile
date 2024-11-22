@@ -11,6 +11,7 @@ import PressableButton from "./Components/PressableButton";
 import Profile from "./Components/Profile";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {TouchableOpacity} from "react-native";
+import Map from "./Components/Map";
 
 
 const Stack = createNativeStackNavigator();
@@ -27,12 +28,12 @@ const AppStack = (<>
                 title: "All Goals", headerRight: () => {
                     return (
                         <TouchableOpacity
-                        onPress={() => {
-                            navigation.navigate("Profile");
-                        }}
-                    >
-                        <Ionicons name="person" size={24} color="pink"/>
-                    </TouchableOpacity>)
+                            onPress={() => {
+                                navigation.navigate("Profile");
+                            }}
+                        >
+                            <Ionicons name="person" size={24} color="pink"/>
+                        </TouchableOpacity>)
                 },
             };
 
@@ -49,8 +50,11 @@ const AppStack = (<>
         }}
     />
     <Stack.Screen name="Profile" component={Profile}/>
+    <Stack.Screen name="Map" component={Map}/>
 </>);
 /* App component */
+
+
 export default function App() {
     const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
     useEffect(() => {

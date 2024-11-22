@@ -2,8 +2,9 @@
 import {initializeApp} from "firebase/app";
 import {getFirestore} from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { initializeAuth, getReactNativePersistence } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+import {initializeAuth, getReactNativePersistence} from "firebase/auth";
+import {getStorage} from "firebase/storage";
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,6 +15,9 @@ const firebaseConfig = {
     messagingSenderId: process.env.EXPO_PUBLIC_messagingSenderId,
     appId: process.env.EXPO_PUBLIC_appId,
 };
+// Your web app's Firebase configuration
+
+
 
 
 /*
@@ -22,5 +26,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-export const auth = initializeAuth(app, {app, persistence: getReactNativePersistence()});
+export const auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+});
 export const storage = getStorage(app);

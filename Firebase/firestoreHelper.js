@@ -1,5 +1,5 @@
 import {
-    addDoc, collection, deleteDoc, doc, getDocs, setDoc, query, where
+    addDoc, collection, deleteDoc, doc, getDocs, setDoc, query, where, getDoc
 } from "firebase/firestore";
 import {auth, db} from "./firebaseSetup";
 
@@ -47,6 +47,25 @@ export async function addWarning(goalId) {
         console.log("Warning added successfully");
     } catch (err) {
         console.log("error in add warning", err);
+    }
+}
+
+export async function writeWithIdToDB(data, collectionName, id) {
+    try {
+        await setDoc(doc(db, collectionName, id), data, {merge: true});
+    } catch (err) {
+        console.log("write to db ", err);
+    }
+}
+
+export async function getADoc(collectionName, id) {
+    try {
+        const docSnap = await getDoc(doc(db, collectionName, id));
+        if (docSnap.exists()) {
+            return docSnap.data();
+        }
+    } catch (err) {
+        console.log("write to db ", err);
     }
 }
 

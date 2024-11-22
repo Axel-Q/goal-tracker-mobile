@@ -1,10 +1,10 @@
 import {View, Text, Pressable} from "react-native";
 import React, {useLayoutEffect} from "react";
 import {auth} from "../Firebase/firebaseSetup";
-import {StackActions as navigation} from "@react-navigation/routers/src";
 import {signOut} from "firebase/auth";
 import {MaterialIcons} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/native";
+import LocationManager from "./LocationManager";
 /*
 * Profile Screen
 * */
@@ -37,6 +37,7 @@ export default function Profile() {
         <View>
             <Text>Email: {auth.currentUser.email}</Text>
             <Text>Profile of user with id: {auth.currentUser.uid}</Text>
+            <LocationManager navigation={navigation}/>
         </View>
     );
 }
