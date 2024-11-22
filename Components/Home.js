@@ -6,8 +6,9 @@ import React from "react";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import {deleteFromDB, writeToDB, deleteAll} from "../Firebase/firestoreHelper";
-import {collection, onSnapshot} from "firebase/firestore";
-import {db} from "../Firebase/firebaseSetup";
+import {collection, onSnapshot, query, where} from "firebase/firestore";
+import {auth, db, storage} from "../Firebase/firebaseSetup";
+import {ref, uploadBytesResumable, uploadBytes} from "firebase/storage";
 import PressableButton from "./PressableButton";
 
 export default function Home({navigation}) {
@@ -22,27 +23,60 @@ export default function Home({navigation}) {
     }
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(collection(db, collectionName), (querySnapshot) => {
-            let newArray = [];
-            if (!querySnapshot.empty) {
-                querySnapshot.forEach((docSnapshot) => {
-                    console.log(docSnapshot.id);
-                    newArray.push({...docSnapshot.data(), id: docSnapshot.id});
-                });
-            }
-            setGoals(newArray);
-        });
+        const unsubscribe = onSnapshot(
+            query(
+                collection(db, collectionName),
+                where("owner", "==", auth.currentUser.uid)
+            ),
+            (querySnapshot) => {
+                let newArray = [];
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((docSnapshot) => {
+                        console.log(docSnapshot.id);
+                        newArray.push({...docSnapshot.data(), id: docSnapshot.id});
+                    });
+                }
+                setGoals(newArray);
+            },
+            (err) => {
+                console.log(err);
+            });
         return () => {
             unsubscribe();
         }
     }, []);
 
-    function handleInputData(data) {
-        console.log("console logout ", data);
+    async function retrieveAndUploadImage(uri) {
+        try {
+            const response = await fetch(uri);
+            if (!response.ok) {
+                throw new Error("The request was not successful");
+            }
+            const blob = await response.blob();
+            const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+            const imageRef = ref(storage, `images/${imageName}`);
+            const uploadResult = await uploadBytes(imageRef, blob);
+            return uploadResult.metadata.fullPath;
+        } catch (err) {
+            console.log("retrieve and upload image ", err);
+        }
+    }
+
+    async function handleInputData(data) {
+        console.log("data", data);
+        let imageUri = "";
+        if (data.imageUri) {
+            imageUri = await retrieveAndUploadImage(data.imageUri);
+        }
+        console.log("retrieved ", imageUri);
         setInputData("study: " + data);
         setModalVisible(false);
+        console.log("imageUri", imageUri);
         // add the new goal to the list of goals
-        const newGoal = {text: data};
+        const newGoal = {
+            text: data.text,
+            owner: auth.currentUser.uid,
+        };
         console.log("newGoal", newGoal);
         writeToDB(newGoal, "goals");
         console.log("goals", goals);
@@ -78,7 +112,7 @@ export default function Home({navigation}) {
         />
     }
 
-    /*add and change background color and tint"*/
+
     /*add back the SafeAreaView tag*/
     return (
         <SafeAreaView style={styles.container}>
