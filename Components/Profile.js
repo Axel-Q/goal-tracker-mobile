@@ -5,6 +5,7 @@ import {signOut} from "firebase/auth";
 import {MaterialIcons} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/native";
 import LocationManager from "./LocationManager";
+import NotificationManager from "./NotificationManager";
 /*
 * Profile Screen
 * */
@@ -38,6 +39,7 @@ export default function Profile() {
             <Text>Email: {auth.currentUser.email}</Text>
             <Text>Profile of user with id: {auth.currentUser.uid}</Text>
             <LocationManager navigation={navigation}/>
+             <NotificationManager />
         </View>
     );
 }

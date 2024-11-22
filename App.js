@@ -12,6 +12,8 @@ import Profile from "./Components/Profile";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {TouchableOpacity} from "react-native";
 import Map from "./Components/Map";
+import {Linking} from "react-native";
+import * as Notifications from "expo-notifications";
 
 
 const Stack = createNativeStackNavigator();
@@ -26,14 +28,13 @@ const AppStack = (<>
         options={({navigation}) => {
             return {
                 title: "All Goals", headerRight: () => {
-                    return (
-                        <TouchableOpacity
-                            onPress={() => {
-                                navigation.navigate("Profile");
-                            }}
-                        >
-                            <Ionicons name="person" size={24} color="pink"/>
-                        </TouchableOpacity>)
+                    return (<TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate("Profile");
+                        }}
+                    >
+                        <Ionicons name="person" size={24} color="pink"/>
+                    </TouchableOpacity>)
                 },
             };
 
@@ -52,6 +53,12 @@ const AppStack = (<>
     <Stack.Screen name="Profile" component={Profile}/>
     <Stack.Screen name="Map" component={Map}/>
 </>);
+
+Notifications.setNotificationHandler({
+    handleNotification: async (notification) => {
+        return {shouldShowAlert: true};
+    },
+});
 /* App component */
 
 
@@ -70,6 +77,29 @@ export default function App() {
             }
         });
     }, []);
+
+    useEffect(() => {
+        const subscription = Notifications.addNotificationReceivedListener(
+            (notification) => {
+                console.log("notification received ", notification);
+            }
+        );
+        return () => subscription.remove();
+    }, []);
+    useEffect(() => {
+        const subscription = Notifications.addNotificationResponseReceivedListener(
+            (notificationResponse) => {
+                const url = notificationResponse.notification.request.content.data?.url;
+                if (url) {
+                    Linking.openURL(url);
+                } else {
+                    console.log("No valid URL provided in notification data.");
+                }
+            }
+        );
+        return () => subscription.remove();
+    }, []);
+
     return (<NavigationContainer>
         <Stack.Navigator
             screenOptions={{

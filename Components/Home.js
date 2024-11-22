@@ -1,5 +1,16 @@
 import {StatusBar} from 'expo-status-bar';
-import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, ScrollView, FlatList, Alert} from 'react-native';
+import {
+    Button,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+    ScrollView,
+    FlatList,
+    Alert,
+    Platform
+} from 'react-native';
 import {useState, useRef, useEffect} from 'react';
 import Header from "./Header";
 import React from "react";
@@ -10,6 +21,9 @@ import {collection, onSnapshot, query, where} from "firebase/firestore";
 import {auth, db, storage} from "../Firebase/firebaseSetup";
 import {ref, uploadBytesResumable, uploadBytes, uploadString} from "firebase/storage";
 import PressableButton from "./PressableButton";
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
+import {verifyPermission} from "./NotificationManager";
 
 
 export default function Home({navigation}) {
@@ -22,6 +36,33 @@ export default function Home({navigation}) {
     const handleVisibility = () => {
         setModalVisible(true);
     }
+
+    useEffect(() => {
+        async function getToken() {
+            try {
+                const hasPermission = await verifyPermission();
+                if (!hasPermission) {
+                    Alert.alert("You need to give permission for push token");
+                    return;
+                }
+                if (Platform.OS === "android") {
+                    await Notifications.setNotificationChannelAsync("default", {
+                        name: "default",
+                        importance: Notifications.AndroidImportance.MAX,
+                    });
+                }
+
+                const tokenData = await Notifications.getExpoPushTokenAsync({
+                    projectId: Constants.expoConfig.extra.eas.projectId,
+                });
+                console.log(tokenData);
+            } catch (err) {
+                console.log("token ", err);
+            }
+        }
+
+        getToken();
+    }, []);
 
     useEffect(() => {
         const unsubscribe = onSnapshot(
@@ -47,22 +88,22 @@ export default function Home({navigation}) {
         }
     }, []);
 
- async function handleImageData(uri) {
-    try {
-      const response = await fetch(uri);
-      if (!response.ok) {
-        throw new Error(`fetch error happened with status: ${response.status}`);
-      }
-      const blob = await response.blob();
-      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
-      const imageRef = ref(storage, `images/${imageName}`);
-      const uploadResult = await uploadBytesResumable(imageRef, blob);
-      console.log("upload result", uploadResult);
-      return uploadResult.metadata.fullPath;
-    } catch (err) {
-      console.log("handle image data", err);
+    async function handleImageData(uri) {
+        try {
+            const response = await fetch(uri);
+            if (!response.ok) {
+                throw new Error(`fetch error happened with status: ${response.status}`);
+            }
+            const blob = await response.blob();
+            const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+            const imageRef = ref(storage, `images/${imageName}`);
+            const uploadResult = await uploadBytesResumable(imageRef, blob);
+            console.log("upload result", uploadResult);
+            return uploadResult.metadata.fullPath;
+        } catch (err) {
+            console.log("handle image data", err);
+        }
     }
-  }
 
     async function handleInputData(data) {
         console.log("data", data);
