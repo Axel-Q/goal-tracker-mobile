@@ -1,4 +1,4 @@
-# 📱 Mobile Application Project  
+# 🎯 GoalTracker: Location-Based Personal Achievement App 
 
 ## 🌟 Overview  
 This mobile application provides a comprehensive set of features centered around user goals, including login, signup, profile management, and map functionalities. The application utilizes Firebase for backend services.  
